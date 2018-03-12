@@ -7,6 +7,8 @@ export function handleLogin() {
         })
 
         VK.Auth.login((res) => { // eslint-disable-line no-undef
+            console.log('---', res)
+
             if(res.session) {
                 let userName = res.session.user.first_name;
                 let userLastName = res.session.user.last_name;
