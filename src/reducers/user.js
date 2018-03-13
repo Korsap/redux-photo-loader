@@ -35,6 +35,9 @@ export default function user(state = initialState, action) {
 		case LOGOUT + SUCCESS:
 			return {
 				...state,
+				name: '',
+				lastName: '',
+				error: '',
 				fetching: false
 			}
 		case LOGOUT + FAIL:
