@@ -1,4 +1,4 @@
-import { LOGIN, REQUEST, SUCCESS, FAIL} from '../constants/User'
+import { LOGIN, REQUEST, SUCCESS, FAIL, LOGOUT} from '../constants/User'
 
 export function handleLogin() {
     return (dispatch) => {
@@ -25,5 +25,29 @@ export function handleLogin() {
                 })
             }
         }, 4)
+    }
+}
+
+export function handleLogout() {
+    return (dispatch) => {
+        dispatch({
+            type: LOGOUT + REQUEST
+        })
+
+        VK.Auth.logout((res) => { // eslint-disable-line no-undef
+            console.log('---', res)
+            if (!res.session) {
+                dispatch({
+                    type: LOGOUT + SUCCESS,
+                    payload: {}
+                })
+            } else {
+                dispatch({
+                    type: LOGOUT + FAIL,
+                    error: true,
+                    payload: new Error('Ошибка выхода')
+                })
+            }
+        })
     }
 }

@@ -1,4 +1,4 @@
-import { LOGIN, REQUEST, SUCCESS, FAIL} from '../constants/User'
+import { LOGIN, REQUEST, SUCCESS, FAIL, LOGOUT} from '../constants/User'
 const initialState = {
 	name: '',
 	lastName: '',
@@ -22,6 +22,22 @@ export default function user(state = initialState, action) {
 				fetching: false
 			}
 		case LOGIN + FAIL:
+			return {
+				...state,
+				error: action.payload.message,
+				fetching: false
+			}
+		case LOGOUT + REQUEST:
+			return {
+				...state,
+				fetching: true
+			}
+		case LOGOUT + SUCCESS:
+			return {
+				...state,
+				fetching: false
+			}
+		case LOGOUT + FAIL:
 			return {
 				...state,
 				error: action.payload.message,

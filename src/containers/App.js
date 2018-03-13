@@ -10,10 +10,10 @@ class App extends Component {
 	render() {
 		const {user, page} = this.props;
         const {getPhotos} = this.props.pageActions;
-        const {handleLogin} = this.props.userActions;
+        const {handleLogin, handleLogout} = this.props.userActions;
 		return (
 			<div>
-				<User user={user} handleLogin={handleLogin}/>
+				<User user={user} handleLogin={handleLogin} handleLogout={handleLogout}/>
 				<Page page={page} getPhotos={getPhotos}/>
 			</div>
 		)
