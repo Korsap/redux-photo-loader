@@ -13,19 +13,27 @@ export default class Page extends Component {
 
 	render() {
 		const { page } = this.props
+		const years = [2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010]
+
+				//<p>У тебя {page.photos.length} фотографий</p>
+
+
 		return (
 			<div className='ib page'>
 				<p>
-                    <button className='btn' onClick={this.onYearBtnClick}>2017</button>{' '}
-					<button className='btn' onClick={this.onYearBtnClick}>2016</button>{' '}
-                    <button className='btn' onClick={this.onYearBtnClick}>2015</button>{' '}
-                    <button className='btn' onClick={this.onYearBtnClick}>2014</button>
+					{years.map((item, index) => <button className='btn' key={index} onClick={this.onYearBtnClick}>{item}</button>) }
 				</p>
 				<h3>{page.year} год</h3>
+				{ page.error ? <p className='error'>Во время загрузки произошла ошибка</p> : ''}
 				{
-					page.fetching ? <Loader/> : <p>У тебя {page.photos.length} фотографий</p>
+					page.fetching ? <Loader/> :
+						page.photos.map((entry, index) =>
+						<div key={index} className='photo'>
+							<p><img src={entry.src} alt=""/></p>
+							<p>{entry.likes.count} ♥</p>
+						</div>
+						)
 				}
-
 			</div>
 		)
 	}
