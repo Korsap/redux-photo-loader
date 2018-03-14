@@ -27,9 +27,9 @@ export default class Page extends Component {
 				{ page.error ? <p className='error'>Во время загрузки произошла ошибка</p> : ''}
 				{
 					page.fetching ? <Loader/> :
-						page.photos.map((entry, index) =>
-						<div key={index} className='photo'>
-							<p><img src={entry.src} alt=""/></p>
+						page.photos.map((entry) =>
+						<div key={entry.id} className='photo'>
+							<p><img src={entry.photo_130} alt=""/></p>
 							<p>{entry.likes.count} ♥</p>
 						</div>
 						)
