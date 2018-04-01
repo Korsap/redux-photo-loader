@@ -1,30 +1,41 @@
 import { GET_PHOTOS, REQUEST, SUCCESS, FAIL } from '../constants/Page'
 
+let allPhotos = [];
+
 export function getPhotos(year) {
     return (dispatch) => {
         dispatch({
             type: GET_PHOTOS + REQUEST,
             payload: year
         })
+		getAllPhotos(0, 200, dispatch)
+    }
+}
 
-		VK.Api.call('photos.getAll', {extended: 1, offset: 0, count: 200, v: "5.73"}, (res) => { // eslint-disable-line
-			// no-undef
-			console.log('---', res)
-            try {
-			    dispatch({
-                    type: GET_PHOTOS + SUCCESS,
-                    payload: res.response.items
-                })
-            }
-			catch (err) {
+function getAllPhotos(offset, count, dispatch) {
+	VK.Api.call('photos.getAll', {extended: 1, offset: offset, count: count, v: "5.73"}, (res) => { // eslint-disable-line
+		// no-undef
+		console.log('---', res)
+		try {
+			if (offset <= res.response.count) {
+				offset += count;
+				allPhotos = allPhotos.concat(res.response.items);
+				getAllPhotos(offset, count, dispatch)
+			} else {
 				dispatch({
-					type: GET_PHOTOS + FAIL,
-					error: true,
-					payload: new Error(err)
+					type: GET_PHOTOS + SUCCESS,
+					payload: allPhotos
 				})
 			}
-		})
-    }
+		}
+		catch (err) {
+			dispatch({
+				type: GET_PHOTOS + FAIL,
+				error: true,
+				payload: new Error(err)
+			})
+		}
+	})
 }
 
 /*setTimeout(() => {
