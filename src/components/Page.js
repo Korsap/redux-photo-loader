@@ -13,11 +13,7 @@ export default class Page extends Component {
 
 	render() {
 		const { page } = this.props
-		const years = [2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010]
-
-				//<p>У тебя {page.photos.length} фотографий</p>
-
-
+		const years = [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006]
 		return (
 			<div className='ib page'>
 				<p>
@@ -27,14 +23,24 @@ export default class Page extends Component {
 				{ page.error ? <p className='error'>Во время загрузки произошла ошибка</p> : ''}
 				{
 					page.fetching ? <Loader/> :
-						page.photos.map((entry) =>
-						<div key={entry.id} className='photo'>
-							<p><img src={entry.photo_130} alt=""/></p>
-							<p>{entry.likes.count} ♥</p>
+						<div>
+							{this.getNumberPhoto()}
+							{page.photos.map((entry) =>
+								<div key={entry.id} className='photo'>
+									<p><img src={entry.photo_130} alt=""/></p>
+									<p>{entry.likes.count} ♥</p>
+								</div>
+							)}
 						</div>
-						)
 				}
 			</div>
+		)
+	}
+
+	getNumberPhoto() {
+		const { page } = this.props
+		return (
+			page.photos.length ? <p>У тебя {page.photos.length} фотографий</p> : <p>Упс... У тебя нет ни одной фотки :(</p>
 		)
 	}
 
