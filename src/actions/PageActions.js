@@ -20,19 +20,21 @@ export function getPhotos(year) {
 }
 
 function makePhotoByYear(photos, selectedYear) {
-	let photosByYear, photoDate;
+	let photosByYear, photoDate, sortedPhotos;
 
 	photosByYear = photos.filter((photo) => {
 		photoDate = new Date(photo.date*1000);
 		return photoDate.getFullYear() === selectedYear
-	})
+	});
 
 	photosByYear.sort((photoA, photoB) => {
 		photoB.likes.count - photoA.likes.count
-	})
+	});
 
-	console.log('+++', photosByYear, ', year:', selectedYear)
- return photosByYear
+	sortedPhotos = photosByYear.concat();
+
+	console.log('!!!', sortedPhotos,'; year:', selectedYear);
+ return sortedPhotos
 }
 
 function getAllPhotos(offset, count, dispatch, year) {
