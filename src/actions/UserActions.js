@@ -7,7 +7,8 @@ export function handleLogin() {
         })
 
         VK.Auth.login((res) => { // eslint-disable-line no-undef
-            console.log('---', res)
+            console.log('---', res, document.cookie)
+            if(!document.cookie) alert("Похоже, что попытка сохранения cookies была заблокирована. Пожалуйста разрешите сохранение cookies в настройках браузера и перезагрузите страницу!")
 
             if(res.session) {
                 let userName = res.session.user.first_name;
