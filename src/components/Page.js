@@ -8,31 +8,39 @@ export default class Page extends Component {
 			year: PropTypes.number.isRequired,
 			photos: PropTypes.array.isRequired
 		}),
+		userStatus: PropTypes.string.isRequired,
 		getPhotos: PropTypes.func.isRequired
 	}
 
 	render() {
-		const { page } = this.props
-		const years = [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006]
+		const { page, userStatus } = this.props;
+		const years = [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006];
+		let photosTemplate;
+		if(userStatus === 'connected') {
+			photosTemplate =
+				<div>
+					{ page.error ? <p className='error'>Во время загрузки произошла ошибка</p> : ''}
+					{
+						page.fetching ? <Loader/> :
+							<div>
+								{this.getNumberPhoto()}
+								{page.photos.map((entry) =>
+									<div key={entry.id} className='photo'>
+										<p><img src={entry.photo_130} alt=""/></p>
+										<p>{entry.likes.count} ♥</p>
+									</div>
+								)}
+							</div>
+					}
+				</div>
+		} else {photosTemplate = <div><p className='error'>Пожалуйста авторизуйтесь!</p></div>}
 		return (
 			<div className='ib page'>
 				<p>
 					{years.map((item, index) => <button className='btn' key={index} onClick={this.onYearBtnClick}>{item}</button>) }
 				</p>
 				<h3>{page.year} год</h3>
-				{ page.error ? <p className='error'>Во время загрузки произошла ошибка</p> : ''}
-				{
-					page.fetching ? <Loader/> :
-						<div>
-							{this.getNumberPhoto()}
-							{page.photos.map((entry) =>
-								<div key={entry.id} className='photo'>
-									<p><img src={entry.photo_130} alt=""/></p>
-									<p>{entry.likes.count} ♥</p>
-								</div>
-							)}
-						</div>
-				}
+				{photosTemplate}
 			</div>
 		)
 	}

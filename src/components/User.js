@@ -6,10 +6,21 @@ export default class User extends Component {
 		user: PropTypes.shape({
 			name: PropTypes.string.isRequired,
 			lastName: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired
+			error: PropTypes.string.isRequired,
+			status: PropTypes.string.isRequired
 		}),
         handleLogin: PropTypes.func.isRequired,
 		handleLogout: PropTypes.func.isRequired
+	}
+
+	componentDidMount() {
+		console.log('222', this.props.user.status)
+		VK.Auth.getLoginStatus((res) => {  // eslint-disable-line no-undef
+			if (res.session) {
+				console.log('componentDidMount()', res.status)
+				if(res.status === 'connected') this.props.handleLogin()
+			}
+		})
 	}
 
 	render() {

@@ -14,7 +14,7 @@ class App extends Component {
 		return (
 			<div>
 				<User user={user} handleLogin={handleLogin} handleLogout={handleLogout}/>
-				<Page page={page} getPhotos={getPhotos}/>
+				<Page page={page} userStatus={user.status} getPhotos={getPhotos}/>
 			</div>
 		)
 	}

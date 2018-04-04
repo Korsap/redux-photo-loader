@@ -3,7 +3,8 @@ const initialState = {
 	name: '',
 	lastName: '',
 	error: '',
-	fetching: false
+	fetching: false,
+	status: ''
 }
 
 export default function user(state = initialState, action) {
@@ -19,13 +20,15 @@ export default function user(state = initialState, action) {
 				name: action.payload.userName,
 				lastName: action.payload.userLastName,
 				error: '',
-				fetching: false
+				fetching: false,
+				status: action.payload.userStatus
 			}
 		case LOGIN + FAIL:
 			return {
 				...state,
 				error: action.payload.message,
-				fetching: false
+				fetching: false,
+				status: action.payload.userStatus
 			}
 		case LOGOUT + REQUEST:
 			return {
@@ -38,13 +41,15 @@ export default function user(state = initialState, action) {
 				name: '',
 				lastName: '',
 				error: '',
-				fetching: false
+				fetching: false,
+				status: action.payload.userStatus
 			}
 		case LOGOUT + FAIL:
 			return {
 				...state,
 				error: action.payload.message,
-				fetching: false
+				fetching: false,
+				status: action.payload.userStatus
 			}
 		default:
             return state

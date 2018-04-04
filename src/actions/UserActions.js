@@ -13,10 +13,11 @@ export function handleLogin() {
             if(res.session) {
                 let userName = res.session.user.first_name;
                 let userLastName = res.session.user.last_name;
+                let userStatus = res.status;
 
                 dispatch({
                     type: LOGIN + SUCCESS,
-                    payload: { userName, userLastName }
+                    payload: { userName, userLastName, userStatus }
                 })
             } else {
                 dispatch({
@@ -38,9 +39,10 @@ export function handleLogout() {
         VK.Auth.logout((res) => { // eslint-disable-line no-undef
             console.log('---', res)
             if (!res.session) {
+				let userStatus = res.status;
                 dispatch({
                     type: LOGOUT + SUCCESS,
-                    payload: {}
+                    payload: {userStatus}
                 })
             } else {
                 dispatch({
